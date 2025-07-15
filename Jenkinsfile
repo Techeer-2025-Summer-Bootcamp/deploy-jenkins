@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sshagent(['service-ssh']) {
                         sh """
-                        scp -r -o StrictHostKeyChecking=no . ${DEPLOY_SERVER}:/home/whysano517/
+                        scp -o StrictHostKeyChecking=no ${DOCKER_COMPOSE_FILE} ${DEPLOY_SERVER}:/home/whysano517/
                         ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER} '
                         cd ~ &&
                         ls -al &&
