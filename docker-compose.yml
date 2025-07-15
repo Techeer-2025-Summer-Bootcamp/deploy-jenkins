@@ -1,0 +1,31 @@
+services:
+  django:
+    image: teami2022/session-fastapi:1.0.3
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn cicd_django.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    networks:
+      - cicd-network
+    depends_on:
+      - postgresdb
+    restart: always
+  
+  postgresdb:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=cicd
+      - POSTGRES_PASSWORD=cicd
+      - POSTGRES_DB=cicd_django_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  cicd-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
