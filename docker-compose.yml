@@ -1,6 +1,6 @@
 services:
   django:
-    image: teami2022/session-fastapi:1.0.3
+    image: teami2022/session-fastapi:1.0.4
     command: >
       sh -c "python manage.py migrate &&
              gunicorn cicd_django.wsgi:application --bind 0.0.0.0:8000"
@@ -8,8 +8,6 @@ services:
       - "8000:8000"
     networks:
       - cicd-network
-    depends_on:
-      - postgresdb
     restart: always
   
   postgresdb:
