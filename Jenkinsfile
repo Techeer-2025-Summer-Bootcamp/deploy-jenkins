@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('SSH into server') {
             steps {
-                sshagent(['deploy-server-access']) {
+                sshagent(['service-ssh']) {
                         sh """
                         scp -r -o StrictHostKeyChecking=no . ${DEPLOY_SERVER}:~/directory
                         ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER} '
